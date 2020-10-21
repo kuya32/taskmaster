@@ -10,6 +10,10 @@
 
 ![Task Master Homepage](screenshots/taskMasterHomepage.PNG)
 
+### Updated Homepage
+
+![Updated Task Master Homepage](screenshots/newtaskMasterHomepage.PNG)
+
 ### Add Task
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask.PNG)
@@ -22,8 +26,19 @@
 
 ![Task Master All Tasks Page](screenshots/taskMasterAllTasks.PNG)
 
+### Task Detail
+
+![Task Master Task Detail](screenshots/taskMasterTaskDetail.PNG)
+
+### User Settings
+
+![Task Master User Settings](screenshots/taskMasterUserSettings.PNG)
+
 ## Daily Change Log
 
-- 10/20/2020
+- 10/19/2020
   - Created the home, add, submit confirmation and all tasks pages.
+- 10/20/2020
+  - Updated the homepage with three more buttons that lead to the new task detail page. Also created a user settings page where the user can update their username.
+  - Took out the submit confirmation page after adding a task and replaced with a toast instead.
 - 10/21/2020
