@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,10 +27,12 @@ public class AddTask extends AppCompatActivity {
                 String itemDescription = itemDescriptionInput.getText().toString();
                 System.out.println(String.format("Submitted! New task: %s has been added to the list! Description: %s.", itemTitle, itemDescription));
 
-                Intent goToSubmitConfirmation = new Intent(AddTask.this, SubmitConfirmation.class);
-                goToSubmitConfirmation.putExtra("Title", itemTitle);
-                goToSubmitConfirmation.putExtra("Description", itemDescription);
-                AddTask.this.startActivity(goToSubmitConfirmation);
+                Intent goToAllTasks = new Intent(AddTask.this, AllTasks.class);
+                goToAllTasks.putExtra("Title", itemTitle);
+                goToAllTasks.putExtra("Description", itemDescription);
+                Toast toast = Toast.makeText(AddTask.this, "You added a new task", Toast.LENGTH_LONG);
+                toast.show();
+//                AddTask.this.startActivity(goToAllTasks);
             }
         });
     }
