@@ -1,4 +1,4 @@
-package com.example.taskmaster;
+package com.macode.taskmaster;
 
 import android.os.Bundle;
 
