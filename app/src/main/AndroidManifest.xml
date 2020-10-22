@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.taskmaster">
+    package="com.macode.taskmaster">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskMaster">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.macode.taskmaster.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,9 +17,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddTask"
+            android:name="com.macode.taskmaster.AddTask"
             android:label="AddTask"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.macode.taskmaster.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +27,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AllTasks"
+            android:name="com.macode.taskmaster.AllTasks"
             android:label="AllTasks"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.macode.taskmaster.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,9 +37,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserSetting"
+            android:name="com.macode.taskmaster.UserSetting"
             android:label="UserSetting"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.macode.taskmaster.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,9 +47,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TaskDetail"
+            android:name="com.macode.taskmaster.TaskDetail"
             android:label="TaskDetail"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.macode.taskmaster.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
