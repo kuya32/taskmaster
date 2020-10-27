@@ -18,9 +18,17 @@
 
 ![Updated Task Master Homepage](screenshots/newNewTaskMasterHomepage.PNG)
 
+### Updated Homepage 10/22
+
+![Updated Task Master Homepage](screenshots/newUpdatedTaskMasterHomepage.PNG)
+
 ### Add Task
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask.PNG)
+
+### Updated Add Task 10/22
+
+![Task Master Add Task Page](screenshots/updatedTaskMasterAddTask.PNG)
 
 ### Submit Confirmation
 

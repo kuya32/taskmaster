@@ -9,12 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    public ArrayList<Task> tasks;
+    public List<Task> tasks;
     public TaskListener taskListener;
 
-    public TaskAdapter(ArrayList<Task> tasks, TaskListener taskListener) {
+    public TaskAdapter(List<Task> tasks, TaskListener taskListener) {
         this.tasks = tasks;
         this.taskListener = taskListener;
     }
