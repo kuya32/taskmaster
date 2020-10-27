@@ -14,6 +14,10 @@
 
 ![Updated Task Master Homepage](screenshots/newtaskMasterHomepage.PNG)
 
+### Updated Homepage 10/21
+
+![Updated Task Master Homepage](screenshots/newNewTaskMasterHomepage.PNG)
+
 ### Add Task
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask.PNG)
@@ -30,6 +34,10 @@
 
 ![Task Master Task Detail](screenshots/taskMasterTaskDetail.PNG)
 
+### Updated Task Detail 10/21
+
+![Updated Task Master Task Detail](screenshots/updatedTaskMasterTaskDetail.PNG)
+
 ### User Settings
 
 ![Task Master User Settings](screenshots/taskMasterUserSettings.PNG)
@@ -42,9 +50,11 @@
   - Updated the homepage with three more buttons that lead to the new task detail page. Also created a user settings page where the user can update their username.
   - Took out the submit confirmation page after adding a task and replaced with a toast instead.
 - 10/21/2020
-  - 
+  - Updated the homepage with the recycler view to show a list of tasks
+  - Made the list of tasks clickable
+  - Created a task class
 - 10/22/2020
   - Updated the Add Task page to save task data to my local database.
   - Refactored homepage RecycleView to display all tasks in my database.
-  - Task detail page reflects clicked task title and description. 
+  - Task detail page reflects clicked task title and description.
   
