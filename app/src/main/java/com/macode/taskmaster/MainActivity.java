@@ -1,24 +1,23 @@
 package com.macode.taskmaster;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskListener{
+
+    Database database;
 
     @Override
     public void onResume() {
@@ -26,6 +25,15 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         TextView homepageTitle = findViewById(R.id.homepageTitle);
         homepageTitle.setText(preferences.getString("usernameTasks", "My Tasks"));
+
+        database = Room.databaseBuilder(getApplicationContext(), Database.class, "macode_task_master")
+                .allowMainThreadQueries()
+                .build();
+        List<Task> tasks = database.taskDAO().getTasksSortedByRecent();
+
+        RecyclerView recyclerView = findViewById(R.id.taskListRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new TaskAdapter(tasks, this));
     }
 
     @Override
@@ -33,27 +41,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("Garbage", "Take out the garbage", "assigned"));
-        tasks.add(new Task("Dishes", "Wash the dishes", "assigned"));
-        tasks.add(new Task("Laundry", "Fold the laundry", "assigned"));
-        tasks.add(new Task("Feed the Cat", "Feed Tofu", "assigned"));
-        tasks.add(new Task("Coding", "Complete lab assignment", "assigned"));
-        tasks.add(new Task("Garbage", "Take out the garbage", "assigned"));
-        tasks.add(new Task("Dishes", "Wash the dishes", "assigned"));
-        tasks.add(new Task("Laundry", "Fold the laundry", "assigned"));
-        tasks.add(new Task("Feed the Cat", "Feed Tofu", "assigned"));
-        tasks.add(new Task("Coding", "Complete lab assignment", "assigned"));
-        tasks.add(new Task("Garbage", "Take out the garbage", "assigned"));
-        tasks.add(new Task("Dishes", "Wash the dishes", "assigned"));
-        tasks.add(new Task("Laundry", "Fold the laundry", "assigned"));
-        tasks.add(new Task("Feed the Cat", "Feed Tofu", "assigned"));
-        tasks.add(new Task("Coding", "Complete lab assignment", "assigned"));
-        tasks.add(new Task("Garbage", "Take out the garbage", "assigned"));
-        tasks.add(new Task("Dishes", "Wash the dishes", "assigned"));
-        tasks.add(new Task("Laundry", "Fold the laundry", "assigned"));
-        tasks.add(new Task("Feed the Cat", "Feed Tofu", "assigned"));
-        tasks.add(new Task("Coding", "Complete lab assignment", "assigned"));
+        database = Room.databaseBuilder(getApplicationContext(), Database.class, "macode_task_master")
+                .allowMainThreadQueries()
+                .build();
+        List<Task> tasks = database.taskDAO().getTasksSortedByRecent();
 
         RecyclerView recyclerView = findViewById(R.id.taskListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

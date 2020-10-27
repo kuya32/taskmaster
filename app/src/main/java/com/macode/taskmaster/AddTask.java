@@ -13,8 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.room.Room;
 
 public class AddTask extends AppCompatActivity {
+
+    Database database;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -22,6 +25,10 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        database = Room.databaseBuilder(getApplicationContext(), Database.class, "macode_task_master")
+                .allowMainThreadQueries()
+                .build();
 
         NotificationChannel channel = new NotificationChannel("basic", "basic", NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription("Basic notifications");
@@ -47,9 +54,9 @@ public class AddTask extends AppCompatActivity {
 
                 notificationManager.notify(89898989, builder.build());
 
-                Intent goToAllTasks = new Intent(AddTask.this, AllTasks.class);
-                goToAllTasks.putExtra("Title", taskTitle);
-                goToAllTasks.putExtra("Description", taskDescription);
+                Task task = new Task(taskTitle, taskDescription, "assigned");
+                database.taskDAO().saveTask(task);
+
                 Toast toast = Toast.makeText(AddTask.this, "You added a new task", Toast.LENGTH_LONG);
                 toast.show();
             }
