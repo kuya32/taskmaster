@@ -65,4 +65,7 @@
   - Updated the Add Task page to save task data to my local database.
   - Refactored homepage RecycleView to display all tasks in my database.
   - Task detail page reflects clicked task title and description.
-  
+- 10/26/2020
+  - Created Espresso tests for homepage button paths and back button functionality
+  - Created Espresso tests for adding a new tasks to the recycler view on homepage
+  - Created Espresso tests for adding a new username and have the new username viewable on the homepage
