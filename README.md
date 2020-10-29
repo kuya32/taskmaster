@@ -22,6 +22,10 @@
 
 ![Updated Task Master Homepage](screenshots/newUpdatedTaskMasterHomepage.PNG)
 
+### Updated Hompage 10/27
+
+![Updated Task Master Homepage](screenshots/updatedTaskMasterHomepage.PNG)
+
 ### Add Task
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask.PNG)
@@ -69,3 +73,7 @@
   - Created Espresso tests for homepage button paths and back button functionality
   - Created Espresso tests for adding a new tasks to the recycler view on homepage
   - Created Espresso tests for adding a new username and have the new username viewable on the homepage
+- 10/26/2020
+  - Connected to DynamoDB using Amplify
+  - Homepage list is updated from DynamoBW
+  - Added tasks are now saved to DynamoDB instead of room
