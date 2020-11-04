@@ -26,6 +26,10 @@
 
 ![Updated Task Master Homepage](screenshots/updatedTaskMasterHomepage.PNG)
 
+### Updated Homepage 10/29
+
+![Updated Task Master Homepage](screenshots/taskMasterHomepage10.29.PNG)
+
 ### Add Task
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask.PNG)
@@ -33,6 +37,10 @@
 ### Updated Add Task 10/22
 
 ![Task Master Add Task Page](screenshots/updatedTaskMasterAddTask.PNG)
+
+### Updated Add Task 10/29
+
+![Task Master Add Task Page](screenshots/taskMasterAddTask10.29.PNG)
 
 ### Submit Confirmation
 
@@ -54,6 +62,10 @@
 
 ![Task Master User Settings](screenshots/taskMasterUserSettings.PNG)
 
+### Update User Settings
+
+![Task MAster User Settings](screenshots/taskMasterUserSettings10.29.PNG)
+
 ## Daily Change Log
 
 - 10/19/2020
@@ -73,7 +85,12 @@
   - Created Espresso tests for homepage button paths and back button functionality
   - Created Espresso tests for adding a new tasks to the recycler view on homepage
   - Created Espresso tests for adding a new username and have the new username viewable on the homepage
-- 10/26/2020
+- 10/27/2020
   - Connected to DynamoDB using Amplify
   - Homepage list is updated from DynamoBW
   - Added tasks are now saved to DynamoDB instead of room
+- 10/28/2020
+  - Created team model with realtion with task model and vice versa
+  - Updated add task page to include team selection and save to DynamoDB
+  - Updated user settings page to inlcude team selection
+  - Homepage title displays user's team selection
