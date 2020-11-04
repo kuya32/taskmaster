@@ -6,37 +6,50 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-import androidx.room.Room;
 
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AddTask extends AppCompatActivity {
 
-    Database database;
+    String teamTask;
+    Map<String, Team> teams;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        database = Room.databaseBuilder(getApplicationContext(), Database.class, "macode_task_master")
-//                .allowMainThreadQueries()
-//                .build();
+        teams = new HashMap<>();
+        Amplify.API.query(
+                ModelQuery.list(Team.class),
+                response -> {
+                    for (Team team : response.getData()) {
+                        teams.put(team.getName(), team);
+                    }
+                    Log.i("Amplify.queryTeams", "Received teams");
+                },
+                error -> Log.e("Amplify.queryTeams", "Dud not receive teams")
+        );
 
         NotificationChannel channel = new NotificationChannel("basic", "basic", NotificationManager.IMPORTANCE_HIGH);
         channel.setDescription("Basic notifications");
@@ -64,19 +77,30 @@ public class AddTask extends AppCompatActivity {
 
                 Task task = Task.builder()
                         .title(taskTitle).body(taskBody)
-                        .state("assigned").build();
+                        .state("new").team(getTeam()).build();
+
 
                 Amplify.API.mutate(ModelMutation.create(task),
                         response -> Log.i("AddTaskActivityAmplify", "Successfully added new task"),
                         error -> Log.e("AddTaskActivityAmplify", error.toString()));
 
-//                Task task = new Task(taskTitle, taskDescription, "assigned");
-//                database.taskDAO().saveTask(task);
-
-                Toast toast = Toast.makeText(AddTask.this, "You added a new task", Toast.LENGTH_LONG);
-                toast.show();
+                Intent intent = new Intent(AddTask.this, MainActivity.class);
+                AddTask.this.startActivity(intent);
+                finish();
             }
         });
     }
 
+    public Team getTeam() {
+        RadioGroup boxOfRadios = AddTask.this.findViewById(R.id.radioGroup);
+        RadioButton selectedTeam = AddTask.this.findViewById(boxOfRadios.getCheckedRadioButtonId());
+        String teamName = selectedTeam.getText().toString();
+        Team chosenTeam = null;
+        for (String team : teams.keySet()) {
+            if (teams.get(team).getName().equals(teamName)) {
+                chosenTeam = teams.get(team);
+            }
+        }
+        return chosenTeam;
+    }
 }
