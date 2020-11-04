@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskMaster">
-        <activity android:name="com.macode.taskmaster.MainActivity">
+        <activity android:name=".SignupConfirmation"></activity>
+        <activity android:name=".Login" />
+        <activity android:name=".Signup" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.macode.taskmaster.AddTask"
+            android:name=".AddTask"
             android:label="AddTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.macode.taskmaster.AllTasks"
+            android:name=".AllTasks"
             android:label="AllTasks">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.macode.taskmaster.UserSetting"
+            android:name=".UserSetting"
             android:label="UserSetting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.macode.taskmaster.TaskDetail"
+            android:name=".TaskDetail"
             android:label="TaskDetail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

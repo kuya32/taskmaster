@@ -30,6 +30,22 @@
 
 ![Updated Task Master Homepage](screenshots/taskMasterHomepage10.29.PNG)
 
+### Updated Homepage 11/2
+
+![Updated Task Master Homepage](screenshots/taskMasterHomepage11.2.PNG)
+
+### Signup Page
+
+![Task Master Signup Page](screenshots/taskMasterSignup.PNG)
+
+### Confirmation Page
+
+![Task Master Confirmation Page](screenshots/taskMasterConfirmation.PNG)
+
+### Login Page
+
+![Task Master Login Page](screenshots/taskMasterLogin.PNG)
+
 ### Add Task
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask.PNG)
@@ -94,3 +110,8 @@
   - Updated add task page to include team selection and save to DynamoDB
   - Updated user settings page to inlcude team selection
   - Homepage title displays user's team selection
+- 11/2/2020
+  - Created classes and activities for signup, login and user confirmation
+  - Added a logout button
+  - Updated homepage with more buttons
+  - Added Cognito user authentication plugin
