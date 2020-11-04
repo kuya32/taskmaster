@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,14 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.ApiOperation;
 import com.amplifyframework.api.aws.AWSApiPlugin;
-import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.api.graphql.model.ModelSubscription;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
-import com.amplifyframework.datastore.generated.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +38,26 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
     RecyclerView recyclerView;
     Handler handler;
     Handler handleTaskFromSubscription;
-
+    Handler handleCheckLoggedIn;
 
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        TextView homepageTitle = findViewById(R.id.homepageTitle);
-        String usernameHomepage = preferences.getString("usernameTasks", "My Tasks");
-        String usernameTeamName = preferences.getString("team", "Favorite Team");
-        homepageTitle.setText(String.format("%s: %s's Tasks", usernameTeamName, usernameHomepage));
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        TextView homepageTitle = findViewById(R.id.homepageTitle);
+//        String usernameHomepage = preferences.getString("usernameTasks", "My Tasks");
+//        String usernameTeamName = preferences.getString("team", "Favorite Team");
+//        homepageTitle.setText(String.format("%s: %s's Tasks", usernameTeamName, usernameHomepage));
+
+        if (Amplify.Auth.getCurrentUser() != null) {
+            TextView taskListTitle = findViewById(R.id.homepageTitle);
+            String updatedHomepageTitle = Amplify.Auth.getCurrentUser().getUsername() + "'s Tasks";
+            taskListTitle.setText(updatedHomepageTitle);
+        } else {
+            String warning = "You Need To Login";
+            TextView taskListTitle = findViewById(R.id.homepageTitle);
+            taskListTitle.setText(warning);
+        }
 
         setupRecyclerView();
     }
@@ -67,13 +76,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
                     }
                 });
 
-//        handleTaskAdded = new Handler(Looper.getMainLooper(),
-//                message -> {
-//                    setupRecyclerView();
-//
-//                    return false;
-//                });
-
         handleTaskFromSubscription = new Handler(Looper.getMainLooper(),
                 message -> {
                     recyclerView.getAdapter().notifyItemInserted(taskInstances.size() - 1);
@@ -83,22 +85,53 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
                     return false;
         });
 
+        handleCheckLoggedIn = new Handler(Looper.getMainLooper(), message -> {
+            if (message.arg1 == 0) {
+                Log.i("Amplify.login", "Handler: They were not logged in");
+            } else if (message.arg1 == 1) {
+                Log.i("Amplify.login", "Handler: They were logged in");
 
+                TextView usernameHomepageView = findViewById(R.id.homepageTitle);
+                usernameHomepageView.setText(String.format("%s's Tasks", Amplify.Auth.getCurrentUser().getUsername()));
 
-//        database = Room.databaseBuilder(getApplicationContext(), Database.class, "macode_task_master")
-//                .fallbackToDestructiveMigration()
-//                .allowMainThreadQueries()
-//                .build();
-
-
+            } else {
+                Log.i("Amplify.login", "Send true or false please");
+            }
+            return false;
+        });
 
         configureAws();
         getTasksFromAws();
         setupTaskSubscription();
+        getIsSignedIn();
+//        addOneMockUsers();
+//        verifyOneMockUser();
+//        loginMockUser();
 
+        Button signupButton = MainActivity.this.findViewById(R.id.signupButton);
+        signupButton.setOnClickListener((view) -> {
+            System.out.println("Going to signup page.");
+            Intent goToSignupIntent = new Intent(MainActivity.this, Signup.class);
+            MainActivity.this.startActivity(goToSignupIntent);
+        });
 
+        Button loginButton = MainActivity.this.findViewById(R.id.loginButton);
+        loginButton.setOnClickListener((view) -> {
+            System.out.println("Going to login page.");
+            Intent goToLoginIntent = new Intent(MainActivity.this, Login.class);
+            MainActivity.this.startActivity(goToLoginIntent);
+        });
 
-//        connectAdapterToRecyclerView(handler);
+        Button logoutButton = MainActivity.this.findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener((view) -> {
+            System.out.println("Going to logout user.");
+            Amplify.Auth.signOut(
+                    () -> Log.i("AuthQuickstart", "Signed Out Successfully"),
+                    error -> Log.e("AuthQuickstart", error.toString())
+            );
+            Intent backToLoginIntent = new Intent(MainActivity.this, Login.class);
+            MainActivity.this.startActivity(backToLoginIntent);
+        });
 
         Button addTaskButton = MainActivity.this.findViewById(R.id.addTaskMainButton);
         addTaskButton.setOnClickListener((view) -> {
@@ -122,13 +155,36 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         });
     }
 
-//    private void connectAdapterToRecyclerView(Handler handler) {
-//        recyclerView = findViewById(R.id.taskListRecyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(new TaskAdapter(taskInstances, this));
-//
-//
-//    }
+    public void loginMockUser(){
+        Amplify.Auth.signIn(
+                "Kuya",
+                "kuya3232",
+                result -> {
+                    Log.i("Amplify.login", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete");
+                    getIsSignedIn();
+                },
+                error -> Log.e("Amplify.login", error.toString())
+        );
+    }
+
+    public void verifyOneMockUser(){
+        Amplify.Auth.confirmSignUp(
+                "Kuya",
+                "625911",
+                result -> Log.i("Amplify.confirm", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
+                error -> Log.e("Amplify.confirm", error.toString())
+        );
+    }
+
+    public void addOneMockUsers() {
+        Amplify.Auth.signUp(
+                "Kuya",
+                "kuya3232",
+                AuthSignUpOptions.builder().userAttribute(AuthUserAttributeKey.email(), "m.acode@outlook.com").build(),
+                result -> Log.i("Amplify.signup", "Result: " + result.toString()),
+                error -> Log.e("Amplify.signup", "Sign up failed", error)
+        );
+    }
 
     private void setupRecyclerView() {
         recyclerView = findViewById(R.id.taskListRecyclerView);
@@ -154,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
     public void configureAws() {
         try {
             Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MainActivityAmplify", "Initialized Amplify");
@@ -176,28 +233,22 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
                 error -> Log.i("Amplify", "Did not get tasks"));
     }
 
-//    public void createTeams() {
-//        Team seahawks = Team.builder()
-//                .name("Seattle Seahawks").build();
-//
-//        Team bills = Team.builder()
-//                .name("Buffalo Bills").build();
-//
-//        Team cardinals = Team.builder()
-//                .name("Arizona Cardinals").build();
-//
-//        Amplify.API.mutate(ModelMutation.create(seahawks),
-//                response -> Log.i("Amplify.addTeam", "Successfully added team"),
-//                error -> Log.e("Amplify.addTeam", error.toString()));
-//
-//        Amplify.API.mutate(ModelMutation.create(bills),
-//                response -> Log.i("Amplify.addTeam", "Successfully added team"),
-//                error -> Log.e("Amplify.addTeam", error.toString()));
-//
-//        Amplify.API.mutate(ModelMutation.create(cardinals),
-//                response -> Log.i("Amplify.addTeam", "Successfully added team"),
-//                error -> Log.e("Amplify.addTeam", error.toString()));
-//    }
+    public void getIsSignedIn() {
+        Amplify.Auth.fetchAuthSession(
+                result -> {
+                    Log.i("Amplify.login", result.toString());
+                    Message message = new Message();
+
+                    if (result.isSignedIn()) {
+                        message.arg1 = 1;
+                    } else {
+                        message.arg1 = 0;
+                    }
+                    handleCheckLoggedIn.sendMessage(message);
+                },
+                error -> Log.e("Amplify.login", error.toString())
+        );
+    }
 
     @Override
     public void taskListener(Task task) {
