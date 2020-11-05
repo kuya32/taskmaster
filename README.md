@@ -58,6 +58,10 @@
 
 ![Task Master Add Task Page](screenshots/taskMasterAddTask10.29.PNG)
 
+### Updated Add Task 11/3
+
+![Task Master Add Task Page](screenshots/taskMasterAddTask11.3.PNG)
+
 ### Submit Confirmation
 
 ![Task Master Submit Page](screenshots/taskMasterSubmit.PNG)
@@ -73,6 +77,10 @@
 ### Updated Task Detail 10/21
 
 ![Updated Task Master Task Detail](screenshots/updatedTaskMasterTaskDetail.PNG)
+
+### Updated Task Detail 11/3
+
+![Updated Task Master Task Detail](screenshots/taskMasterTaskDetail11.3.PNG)
 
 ### User Settings
 
@@ -115,3 +123,8 @@
   - Added a logout button
   - Updated homepage with more buttons
   - Added Cognito user authentication plugin
+- 11/3/2020
+  - Connected Amplify Storage to app
+  - Added the ability to add attachment to individual tasks
+  - Updated detail page to show image selected of task
+  - Updated task object in schema to take an additional property

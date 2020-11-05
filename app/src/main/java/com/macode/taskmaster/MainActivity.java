@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,11 +20,10 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.api.graphql.model.ModelSubscription;
-import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
-import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskListener{
 
     List<Task> taskInstances = new ArrayList<>();
-//    Database database;
     RecyclerView recyclerView;
     Handler handler;
     Handler handleTaskFromSubscription;
@@ -104,9 +100,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         getTasksFromAws();
         setupTaskSubscription();
         getIsSignedIn();
-//        addOneMockUsers();
-//        verifyOneMockUser();
-//        loginMockUser();
 
         Button signupButton = MainActivity.this.findViewById(R.id.signupButton);
         signupButton.setOnClickListener((view) -> {
@@ -155,37 +148,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         });
     }
 
-    public void loginMockUser(){
-        Amplify.Auth.signIn(
-                "Kuya",
-                "kuya3232",
-                result -> {
-                    Log.i("Amplify.login", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete");
-                    getIsSignedIn();
-                },
-                error -> Log.e("Amplify.login", error.toString())
-        );
-    }
-
-    public void verifyOneMockUser(){
-        Amplify.Auth.confirmSignUp(
-                "Kuya",
-                "625911",
-                result -> Log.i("Amplify.confirm", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
-                error -> Log.e("Amplify.confirm", error.toString())
-        );
-    }
-
-    public void addOneMockUsers() {
-        Amplify.Auth.signUp(
-                "Kuya",
-                "kuya3232",
-                AuthSignUpOptions.builder().userAttribute(AuthUserAttributeKey.email(), "m.acode@outlook.com").build(),
-                result -> Log.i("Amplify.signup", "Result: " + result.toString()),
-                error -> Log.e("Amplify.signup", "Sign up failed", error)
-        );
-    }
-
     private void setupRecyclerView() {
         recyclerView = findViewById(R.id.taskListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -211,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         try {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MainActivityAmplify", "Initialized Amplify");
@@ -256,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         goToTaskDetailsIntent.putExtra("title", task.getTitle());
         goToTaskDetailsIntent.putExtra("body", task.getBody());
         goToTaskDetailsIntent.putExtra("state", task.getState());
+        goToTaskDetailsIntent.putExtra("fileKey", task.getFileKey());
         this.startActivity(goToTaskDetailsIntent);
     }
 }

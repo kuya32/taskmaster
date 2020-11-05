@@ -7,7 +7,7 @@ import com.amplifyframework.core.model.ModelProvider;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-/** 
+/**
  *  Contains the set of model classes that implement {@link Model}
  * interface.
  */

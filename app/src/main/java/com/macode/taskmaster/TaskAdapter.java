@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.datastore.generated.model.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
@@ -57,14 +56,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         holder.task = tasks.get(position);
+        System.out.println(holder.task);
 
         TextView titleTextView = holder.itemView.findViewById(R.id.taskDetailTitle);
         TextView bodyTextView = holder.itemView.findViewById(R.id.taskDetailBody);
         TextView stateTextView = holder.itemView.findViewById(R.id.taskDetailState);
+        TextView fileKeyTextView = holder.itemView.findViewById(R.id.taskDetailFileKey);
+        System.out.println(fileKeyTextView);
 
         titleTextView.setText(holder.task.getTitle());
         bodyTextView.setText(holder.task.getBody());
         stateTextView.setText(holder.task.getState());
+        fileKeyTextView.setText(holder.task.getFileKey());
     }
 
     @Override

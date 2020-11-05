@@ -11,15 +11,26 @@
         android:layout_height="wrap_content"
         android:text="ADD TASK"
         app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/chosenFileButton" />
+
+    <Button
+        android:id="@+id/chosenFileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose File"
+        app:layout_constraintBottom_toTopOf="@+id/addTaskPageButton"
+        app:layout_constraintEnd_toEndOf="@+id/addTaskPageButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/addTaskPageButton"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <TextView
         android:id="@+id/addTaskTitle"
         android:layout_width="131dp"
         android:layout_height="55dp"
-        android:layout_marginTop="40dp"
         android:text="Add Task"
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/taskTitle"
@@ -32,11 +43,11 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
         android:text="Total Tasks: 0"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addTaskPageButton" />
 
@@ -70,7 +81,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="30dp"
         android:layout_marginBottom="36dp"
         android:text="Task Title"
         app:layout_constraintBottom_toBottomOf="@+id/taskTitle"
@@ -80,7 +91,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="30dp"
         android:layout_marginBottom="36dp"
         android:text="Task Description"
         app:layout_constraintBottom_toBottomOf="@+id/taskDescription"
@@ -89,10 +100,11 @@
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="223dp"
-        android:layout_height="164dp"
-        app:layout_constraintBottom_toTopOf="@+id/addTaskPageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="175dp"
+        app:layout_constraintBottom_toTopOf="@+id/chosenFileButton"
+        app:layout_constraintEnd_toEndOf="@+id/chosenFileButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/chosenFileButton"
         app:layout_constraintTop_toBottomOf="@+id/taskDescription">
 
         <TextView
@@ -103,29 +115,38 @@
             android:text="Teams" />
 
         <RadioButton
-            android:id="@+id/seahawksRadio"
+            android:id="@+id/cardinalsRadio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Seattle Seahawks"
+            android:gravity="center|left"
+            android:text="Arizona Cardinals"
             android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/billsRadio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center|left"
             android:text="Buffalo Bills"
             android:textStyle="bold" />
 
         <RadioButton
-            android:id="@+id/cardinalsRadio"
+            android:id="@+id/seahawksRadio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Arizona Cardinals"
+            android:gravity="center|left"
+            android:text="Seattle Seahawks"
             android:textStyle="bold" />
 
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/chosenFileText"
+        android:layout_width="87dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chosenFileButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

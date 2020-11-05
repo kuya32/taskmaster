@@ -8,6 +8,7 @@ mutation CreateTask(
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -30,6 +31,7 @@ mutation UpdateTask(
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -52,6 +54,7 @@ mutation DeleteTask(
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -78,6 +81,7 @@ mutation CreateTeam(
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }
@@ -100,6 +104,7 @@ mutation UpdateTeam(
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }
@@ -122,6 +127,7 @@ mutation DeleteTeam(
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }

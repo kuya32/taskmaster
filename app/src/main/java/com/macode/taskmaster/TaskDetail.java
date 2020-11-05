@@ -4,9 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amplifyframework.core.Amplify;
+
+import java.io.File;
 
 public class TaskDetail extends AppCompatActivity {
 
@@ -14,7 +21,6 @@ public class TaskDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         TextView taskTitle = TaskDetail.this.findViewById(R.id.taskDetailTitle);
@@ -25,5 +31,20 @@ public class TaskDetail extends AppCompatActivity {
         taskBody.setText(intent.getExtras().getString("body"));
         String stateText = "Progress: " + intent.getExtras().getString("state");
         taskState.setText(stateText);
+
+        downloadFile(intent.getExtras().getString("fileKey"));
+    }
+
+    private void downloadFile(String fileKey) {
+        Amplify.Storage.downloadFile(
+                fileKey,
+                new File(getApplicationContext().getFilesDir() + "/" + fileKey + ".txt"),
+                result -> {
+                    Log.i("Amplify.S3Download", "Successfully downloaded: " + result.getFile().getName());
+                    ImageView taskFileKeyImage = findViewById(R.id.taskDetailFileKeyImage);
+                    taskFileKeyImage.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                },
+                error -> Log.e("Amplify.S3Download",  "Download Failure", error)
+        );
     }
 }
