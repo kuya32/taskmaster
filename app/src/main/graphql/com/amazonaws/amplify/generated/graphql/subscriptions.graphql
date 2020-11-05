@@ -5,6 +5,7 @@ subscription OnCreateTask {
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -24,6 +25,7 @@ subscription OnUpdateTask {
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -43,6 +45,7 @@ subscription OnDeleteTask {
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -66,6 +69,7 @@ subscription OnCreateTeam {
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }
@@ -85,6 +89,7 @@ subscription OnUpdateTeam {
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }
@@ -104,6 +109,7 @@ subscription OnDeleteTeam {
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }

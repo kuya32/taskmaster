@@ -5,6 +5,7 @@ query GetTask($id: ID!) {
     title
     body
     state
+    fileKey
     team {
       id
       name
@@ -29,6 +30,7 @@ query ListTasks(
       title
       body
       state
+      fileKey
       team {
         id
         name
@@ -51,6 +53,7 @@ query GetTeam($id: ID!) {
         title
         body
         state
+        fileKey
         createdAt
         updatedAt
       }

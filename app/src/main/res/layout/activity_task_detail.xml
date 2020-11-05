@@ -26,10 +26,10 @@
         android:gravity="center|center_horizontal"
         android:text="Name of Task"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/taskDetailBody"
-        app:layout_constraintEnd_toEndOf="@+id/taskDetailBody"
+        app:layout_constraintBottom_toTopOf="@+id/taskDetailFileKeyImage"
+        app:layout_constraintEnd_toEndOf="@+id/taskDetailFileKeyImage"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/taskDetailBody"
+        app:layout_constraintStart_toStartOf="@+id/taskDetailFileKeyImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -43,6 +43,17 @@
         app:layout_constraintEnd_toEndOf="@+id/taskDetailState"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/taskDetailState"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetailTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailFileKeyImage" />
+
+    <ImageView
+        android:id="@+id/taskDetailFileKeyImage"
+        android:layout_width="214dp"
+        android:layout_height="121dp"
+        app:layout_constraintBottom_toTopOf="@+id/taskDetailBody"
+        app:layout_constraintEnd_toEndOf="@+id/taskDetailBody"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/taskDetailBody"
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailTitle"
+        app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
