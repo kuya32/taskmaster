@@ -2,12 +2,14 @@ package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.annotations.BelongsTo;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
 
 import com.amplifyframework.core.model.Model;
+import com.amplifyframework.core.model.annotations.Index;
 import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
 import com.amplifyframework.core.model.query.predicate.QueryField;
@@ -22,13 +24,13 @@ public final class Task implements Model {
   public static final QueryField TITLE = field("title");
   public static final QueryField BODY = field("body");
   public static final QueryField STATE = field("state");
-  public static final QueryField FILEKEY = field("fileKey");
+  public static final QueryField FILE_KEY = field("fileKey");
   public static final QueryField TEAM = field("taskTeamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="String") String state;
-  private final @ModelField(targetType ="String") String fileKey;
+  private final @ModelField(targetType="String") String fileKey;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "taskTeamId", type = Team.class) Team team;
   public String getId() {
       return id;
@@ -45,7 +47,7 @@ public final class Task implements Model {
   public String getState() {
       return state;
   }
-
+  
   public String getFileKey() {
       return fileKey;
   }
@@ -201,9 +203,9 @@ public final class Task implements Model {
         this.state = state;
         return this;
     }
-
+    
     @Override
-    public BuildStep fileKey(String fileKey) {
+     public BuildStep fileKey(String fileKey) {
         this.fileKey = fileKey;
         return this;
     }
@@ -245,7 +247,7 @@ public final class Task implements Model {
         .fileKey(fileKey)
         .team(team);
     }
-
+    
     @Override
      public CopyOfBuilder title(String title) {
       return (CopyOfBuilder) super.title(title);
@@ -260,10 +262,10 @@ public final class Task implements Model {
      public CopyOfBuilder state(String state) {
       return (CopyOfBuilder) super.state(state);
     }
-
+    
     @Override
-    public CopyOfBuilder fileKey(String fileKey) {
-        return (CopyOfBuilder) super.fileKey(fileKey);
+     public CopyOfBuilder fileKey(String fileKey) {
+      return (CopyOfBuilder) super.fileKey(fileKey);
     }
     
     @Override

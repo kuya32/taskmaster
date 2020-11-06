@@ -7,13 +7,13 @@ import com.amplifyframework.core.model.ModelProvider;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-/**
+/** 
  *  Contains the set of model classes that implement {@link Model}
  * interface.
  */
 
 public final class AmplifyModelProvider implements ModelProvider {
-  private static final String AMPLIFY_MODEL_VERSION = "889bb7f9740f5db153c69a010b87c7bf";
+  private static final String AMPLIFY_MODEL_VERSION = "08bdfe13150701d31856d3cb9f02aaee";
   private static AmplifyModelProvider amplifyGeneratedModelInstance;
   private AmplifyModelProvider() {
     

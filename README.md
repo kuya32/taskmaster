@@ -88,7 +88,15 @@
 
 ### Update User Settings
 
-![Task MAster User Settings](screenshots/taskMasterUserSettings10.29.PNG)
+![Task Master User Settings](screenshots/taskMasterUserSettings10.29.PNG)
+
+### Confirmation Notication from Firebase
+
+![Task Master Firebase Notification](screenshots/firebaseCloudMessaging.PNG)
+
+### Confirmation Notication from Pinpoint
+
+![Task Master Pinpoint Notification](screenshots/awsPinpointMessage.PNG)
 
 ## Daily Change Log
 
@@ -128,3 +136,9 @@
   - Added the ability to add attachment to individual tasks
   - Updated detail page to show image selected of task
   - Updated task object in schema to take an additional property
+- 11/4/2020
+  - Connected AWS Notification Services to my app
+  - Able to create and recieve notifications from the Firebase console
+  - Able to create and recieve notifications from the Pinpoint console
+- 11/5/2020
+  - 

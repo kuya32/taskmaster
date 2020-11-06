@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1020640155031",
+    "firebase_url": "https://task-master-e6032.firebaseio.com",
+    "project_id": "task-master-e6032",
+    "storage_bucket": "task-master-e6032.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020640155031:android:5b73a85c144dadf3df60d2",
+        "android_client_info": {
+          "package_name": "com.macode.taskmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020640155031-1cfg6dr7davu1639lli4m833lqori476.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBokKXD6yk039WIe5WaLvSeN9NmWVQ6Cy0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020640155031-1cfg6dr7davu1639lli4m833lqori476.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
