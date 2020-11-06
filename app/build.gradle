@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
 }
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -31,6 +32,15 @@ android {
 }
 
 dependencies {
+
+    // Cloud messaging
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+
+    implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.11.+'
+    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.11.+@aar'){ transitive = true}
 
     // Amplify core dependency
     implementation 'com.amplifyframework:core:1.4.1'
