@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.EventLog;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         ((Button) findViewById(R.id.signupUserButton)).setOnClickListener(view -> {
+            EventTracker.trackButtonClicked(view);
             String username = ((TextView) findViewById(R.id.usernameSignupForm)).getText().toString();
             String password = ((TextView) findViewById(R.id.passwordSignupForm)).getText().toString();
             String email = ((TextView) findViewById(R.id.emailSignupForm)).getText().toString();

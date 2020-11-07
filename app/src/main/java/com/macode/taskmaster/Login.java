@@ -20,6 +20,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ((Button) findViewById(R.id.userLoginButton)).setOnClickListener(view -> {
+            EventTracker.trackButtonClicked(view);
             String username = ((TextView) findViewById(R.id.usernameLogin)).getText().toString();
             String password = ((TextView) findViewById(R.id.passwordLogin)).getText().toString();
 

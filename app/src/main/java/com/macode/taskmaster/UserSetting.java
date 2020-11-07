@@ -22,6 +22,7 @@ public class UserSetting extends AppCompatActivity {
         SharedPreferences.Editor preferenceEditor = preferences.edit();
 
         findViewById(R.id.usernameButton).setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             RadioGroup boxOfRadios = UserSetting.this.findViewById(R.id.userSettingsRadioGroup);
             RadioButton selectedTeam = UserSetting.this.findViewById(boxOfRadios.getCheckedRadioButtonId());
             String team = selectedTeam.getText().toString();

@@ -24,6 +24,7 @@ import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.pinpoint.AWSPinpointAnalyticsPlugin;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.api.graphql.model.ModelSubscription;
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
         Button signupButton = MainActivity.this.findViewById(R.id.signupButton);
         signupButton.setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             System.out.println("Going to signup page.");
             Intent goToSignupIntent = new Intent(MainActivity.this, Signup.class);
             MainActivity.this.startActivity(goToSignupIntent);
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
         Button loginButton = MainActivity.this.findViewById(R.id.loginButton);
         loginButton.setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             System.out.println("Going to login page.");
             Intent goToLoginIntent = new Intent(MainActivity.this, Login.class);
             MainActivity.this.startActivity(goToLoginIntent);
@@ -167,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
         Button logoutButton = MainActivity.this.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             System.out.println("Going to logout user.");
             Amplify.Auth.signOut(
                     () -> Log.i("AuthQuickstart", "Signed Out Successfully"),
@@ -178,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
         Button addTaskButton = MainActivity.this.findViewById(R.id.addTaskMainButton);
         addTaskButton.setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             System.out.println("Going to add a task page.");
             Intent goToAddTaskIntent = new Intent(MainActivity.this, AddTask.class);
             MainActivity.this.startActivity(goToAddTaskIntent);
@@ -185,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
         Button allTasksButton = MainActivity.this.findViewById(R.id.allTasksMainButton);
         allTasksButton.setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             System.out.println("Going to all tasks page.");
             Intent goToAllTasksIntent = new Intent(MainActivity.this, AllTasks.class);
             MainActivity.this.startActivity(goToAllTasksIntent);
@@ -192,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
         ImageButton userSettingsButton = MainActivity.this.findViewById(R.id.userSettingsButton);
         userSettingsButton.setOnClickListener((view) -> {
+            EventTracker.trackButtonClicked(view);
             System.out.println("Going to user settings page.");
             Intent goToUserSettingsIntent = new Intent(MainActivity.this, UserSetting.class);
             MainActivity.this.startActivity((goToUserSettingsIntent));
@@ -224,7 +231,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.addPlugin(new AWSS3StoragePlugin());
+            Amplify.addPlugin(new AWSPinpointAnalyticsPlugin(getApplication()));
             Amplify.configure(getApplicationContext());
+
+            EventTracker.eventTrackerAppStart();
 
             Log.i("MainActivityAmplify", "Initialized Amplify");
         } catch (AmplifyException e) {

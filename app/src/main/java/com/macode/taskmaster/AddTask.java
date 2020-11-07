@@ -58,6 +58,7 @@ public class AddTask extends AppCompatActivity {
         chosenFileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EventTracker.trackButtonClicked(view);
                 retrieveFile();
             }
         });
@@ -71,6 +72,7 @@ public class AddTask extends AppCompatActivity {
         addTaskPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventTracker.trackButtonClicked(v);
                 EditText taskTitleInput = AddTask.this.findViewById(R.id.taskTitle);
                 EditText taskBodyInput = AddTask.this.findViewById(R.id.taskDescription);
                 String taskTitle = taskTitleInput.getText().toString();
