@@ -1,42 +1,48 @@
 {
-    "api": {
-        "tasks": {
-            "service": "AppSync",
-            "providerPlugin": "awscloudformation",
-            "output": {
-                "authConfig": {
-                    "defaultAuthentication": {
-                        "authenticationType": "API_KEY",
-                        "apiKeyConfig": {
-                            "apiKeyExpirationDays": 30,
-                            "description": "taskskey"
-                        }
-                    },
-                    "additionalAuthenticationProviders": []
-                }
+  "api": {
+    "tasks": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "taskskey"
             }
+          },
+          "additionalAuthenticationProviders": []
         }
-    },
-    "auth": {
-        "taskmasterd1b78be0": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [],
-            "customAuth": false
-        }
-    },
-    "storage": {
-        "taskMasterImgaes": {
-            "service": "S3",
-            "providerPlugin": "awscloudformation"
-        }
-    },
-    "notifications": {
-        "TaskMaster": {
-            "service": "Pinpoint",
-            "channels": [
-                "FCM"
-            ]
-        }
+      }
     }
+  },
+  "auth": {
+    "taskmasterd1b78be0": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "taskMasterImgaes": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "notifications": {
+    "TaskMaster": {
+      "service": "Pinpoint",
+      "channels": [
+        "FCM"
+      ]
+    }
+  },
+  "analytics": {
+    "TaskMaster": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
+  }
 }

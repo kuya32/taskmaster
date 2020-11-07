@@ -98,6 +98,10 @@
 
 ![Task Master Pinpoint Notification](screenshots/awsPinpointMessage.PNG)
 
+### AWS Analytics Events Data
+
+![AWS Analytics Events Data](screenshots/awsPinpointEvents.PNG)
+
 ## Daily Change Log
 
 - 10/19/2020
@@ -141,4 +145,8 @@
   - Able to create and recieve notifications from the Firebase console
   - Able to create and recieve notifications from the Pinpoint console
 - 11/5/2020
-  - 
+  - Added Amplify Analytics
+  - Created Event Tracking class and methods to go along
+    - trackButtonClicked()
+    - eventTrackerAppStart()
+  - Added methods to all necessary events within app

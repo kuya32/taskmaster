@@ -18,6 +18,7 @@ public class SignupConfirmation extends AppCompatActivity {
         setContentView(R.layout.activity_signup_confirmation);
 
         ((Button) findViewById(R.id.confirmationButton)).setOnClickListener(view -> {
+            EventTracker.trackButtonClicked(view);
             String username = ((TextView) findViewById(R.id.usernameConfirmation)).getText().toString();
             String verificationCode = ((TextView) findViewById(R.id.verificationCode)).getText().toString();
 
