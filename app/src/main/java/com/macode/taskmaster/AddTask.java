@@ -3,6 +3,7 @@ package com.macode.taskmaster;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FileUtils;
@@ -36,7 +37,7 @@ public class AddTask extends AppCompatActivity {
     Map<String, Team> teams;
     String globalKey = "";
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,25 @@ public class AddTask extends AppCompatActivity {
                 },
                 error -> Log.e("Amplify.queryTeams", "Dud not receive teams")
         );
+
+        Intent sharedImageIntent = getIntent();
+        if (sharedImageIntent.getType() != null) {
+            attachedFile = new File(getFilesDir(), "temporaryFile");
+            // Use Uri to retrieve data: https://stackoverflow.com/questions/7832773/android-how-to-get-the-image-using-intent-data
+            Uri imageData = sharedImageIntent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(imageData);
+                FileUtils.copy(inputStream, new FileOutputStream(attachedFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextView fileStatusText = AddTask.this.findViewById(R.id.chosenFileText);
+            String fileAttached = "File Attached";
+            fileStatusText.setText(fileAttached);
+            Log.i("Amplify.resultActivity", "Its impossibru!!!");
+        }
 
         Button chosenFileButton = AddTask.this.findViewById(R.id.chosenFileButton);
         chosenFileButton.setOnClickListener(new View.OnClickListener() {
@@ -153,20 +173,26 @@ public class AddTask extends AppCompatActivity {
 
         if (requestCode == 32) {
             Log.i("Amplify.resultImage", "Got the image");
-            attachedFile = new File(getFilesDir(), "temporaryFile");
-
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                FileUtils.copy(inputStream, new FileOutputStream(attachedFile));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            TextView fileStatusText = AddTask.this.findViewById(R.id.chosenFileText);
-            String fileAttached = "File Attached";
-            fileStatusText.setText(fileAttached);
+            updatedAttachedFile(data);
         } else {
-            Log.i("Amplify.resultActivity", "Its impossibru!!!");
+            Log.i("Amplify.resultActivity", "Did not receive image");
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public void updatedAttachedFile(Intent data) {
+        attachedFile = new File(getFilesDir(), "temporaryFile");
+
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(data.getData());
+            FileUtils.copy(inputStream, new FileOutputStream(attachedFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        TextView fileStatusText = AddTask.this.findViewById(R.id.chosenFileText);
+        String fileAttached = "File Attached";
+        fileStatusText.setText(fileAttached);
+        Log.i("Amplify.resultActivity", "Its impossibru!!!");
     }
 }
