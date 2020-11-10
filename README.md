@@ -82,6 +82,10 @@
 
 ![Updated Task Master Task Detail](screenshots/taskMasterTaskDetail11.3.PNG)
 
+### Updated Task Detail 11/10
+
+![Updated Task Master Task Detail](screenshots/taskMasterTaskDetail11.10.PNG)
+
 ### User Settings
 
 ![Task Master User Settings](screenshots/taskMasterUserSettings.PNG)
@@ -150,3 +154,7 @@
     - trackButtonClicked()
     - eventTrackerAppStart()
   - Added methods to all necessary events within app
+- 11/10/2020
+  - Shared images are available to Add Task page
+  - Shared images are viewed in Task Detail page
+  

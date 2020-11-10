@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         configureAws();
         getPinpointManager(getApplicationContext());
         getTasksFromAws();
+        setupRecyclerView();
         setupTaskSubscription();
         getIsSignedIn();
 
