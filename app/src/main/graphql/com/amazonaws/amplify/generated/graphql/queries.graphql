@@ -6,6 +6,9 @@ query GetTask($id: ID!) {
     body
     state
     fileKey
+    address
+    latitude
+    longitude
     team {
       id
       name
@@ -31,6 +34,9 @@ query ListTasks(
       body
       state
       fileKey
+      address
+      latitude
+      longitude
       team {
         id
         name
@@ -54,6 +60,9 @@ query GetTeam($id: ID!) {
         body
         state
         fileKey
+        address
+        latitude
+        longitude
         createdAt
         updatedAt
       }

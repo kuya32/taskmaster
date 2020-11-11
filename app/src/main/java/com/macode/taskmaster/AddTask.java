@@ -1,8 +1,13 @@
 package com.macode.taskmaster;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
@@ -24,18 +30,32 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class AddTask extends AppCompatActivity {
     File attachedFile;
     Map<String, Team> teams;
     String globalKey = "";
+    FusedLocationProviderClient fusedLocationProviderClient;
+    Location currentLocation;
+    LocationRequest locationRequest;
+    LocationCallback locationCallback;
+    String addressString;
+    float latitude;
+    float longitude;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -73,6 +93,45 @@ public class AddTask extends AppCompatActivity {
             fileStatusText.setText(fileAttached);
             Log.i("Amplify.resultActivity", "Its impossibru!!!");
         }
+
+        // Configure location services
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                currentLocation = locationResult.getLastLocation();
+                Log.i("Location", currentLocation.toString());
+
+                Geocoder geocoder = new Geocoder(AddTask.this, Locale.getDefault());
+                try {
+                    List<Address> addressList = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 10);
+                    Log.i("Location", addressList.get(0).toString());
+                    latitude = (float) currentLocation.getLatitude();
+                    longitude = (float) currentLocation.getLongitude();
+                    addressString = addressList.get(0).getAddressLine(0);
+                    Log.i("Location", addressString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission((this), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && (ActivityCompat.checkSelfPermission((this), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            Log.i("Location", "Location access permission is not permitted");
+            requestLocationAccess();
+            return;
+        }
+
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
 
         Button chosenFileButton = AddTask.this.findViewById(R.id.chosenFileButton);
         chosenFileButton.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +176,9 @@ public class AddTask extends AppCompatActivity {
                 Task task = Task.builder()
                         .title(taskTitle).body(taskBody)
                         .state("new").fileKey(globalKey)
+                        .address(addressString)
+                        .latitude(latitude)
+                        .longitude(longitude)
                         .team(getTeam()).build();
 
                 Amplify.API.mutate(ModelMutation.create(task),
@@ -194,5 +256,9 @@ public class AddTask extends AppCompatActivity {
         String fileAttached = "File Attached";
         fileStatusText.setText(fileAttached);
         Log.i("Amplify.resultActivity", "Its impossibru!!!");
+    }
+
+    public void requestLocationAccess() {
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
     }
 }
