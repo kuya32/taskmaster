@@ -4,6 +4,9 @@ type Task @model {
   body: String
   state: String
   fileKey: String
+  address: String
+  latitude: Float
+  longitude: Float
   team: Team @connection(name: "teamTasks")
 }
 

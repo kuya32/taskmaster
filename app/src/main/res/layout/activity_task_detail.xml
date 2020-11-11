@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/taskDetailState"
         android:layout_width="200dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="State"
         android:textSize="18sp"
@@ -17,12 +18,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetailBody" />
+        app:layout_constraintTop_toBottomOf="@+id/checkMapLocationButton" />
 
     <TextView
         android:id="@+id/taskDetailTitle"
         android:layout_width="206dp"
-        android:layout_height="56dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
         android:gravity="center|center_horizontal"
         android:text="Name of Task"
         android:textSize="24sp"
@@ -34,26 +36,51 @@
 
     <TextView
         android:id="@+id/taskDetailBody"
-        android:layout_width="256dp"
-        android:layout_height="276dp"
+        android:layout_width="283dp"
+        android:layout_height="201dp"
         android:gravity="center|clip_vertical"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet cursus ex, vitae tempor est molestie molestie. Praesent molestie, mi eget tincidunt convallis, diam magna lacinia mi, et lacinia lorem lacus eget velit. Maecenas fringilla, purus eu tincidunt molestie, dolor lectus volutpat felis, non ornare justo magna non arcu. Mauris."
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/taskDetailState"
-        app:layout_constraintEnd_toEndOf="@+id/taskDetailState"
+        app:layout_constraintBottom_toTopOf="@+id/taskDetailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/taskDetailAddress"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/taskDetailState"
+        app:layout_constraintStart_toStartOf="@+id/taskDetailAddress"
         app:layout_constraintTop_toBottomOf="@+id/taskDetailFileKeyImage" />
 
     <ImageView
         android:id="@+id/taskDetailFileKeyImage"
-        android:layout_width="214dp"
-        android:layout_height="121dp"
+        android:layout_width="258dp"
+        android:layout_height="161dp"
         app:layout_constraintBottom_toTopOf="@+id/taskDetailBody"
         app:layout_constraintEnd_toEndOf="@+id/taskDetailBody"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/taskDetailBody"
         app:layout_constraintTop_toBottomOf="@+id/taskDetailTitle"
         app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+    <TextView
+        android:id="@+id/taskDetailAddress"
+        android:layout_width="271dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:text="Address"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/checkMapLocationButton"
+        app:layout_constraintEnd_toEndOf="@+id/checkMapLocationButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/checkMapLocationButton"
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailBody" />
+
+    <Button
+        android:id="@+id/checkMapLocationButton"
+        android:layout_width="128dp"
+        android:layout_height="68dp"
+        android:gravity="center"
+        android:text="Google Maps"
+        app:layout_constraintBottom_toTopOf="@+id/taskDetailState"
+        app:layout_constraintEnd_toEndOf="@+id/taskDetailState"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/taskDetailState"
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailAddress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

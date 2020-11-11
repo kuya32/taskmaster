@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         });
 
         configureAws();
+        requestLocationAccess();
         getPinpointManager(getApplicationContext());
         getTasksFromAws();
         setupRecyclerView();
@@ -274,6 +276,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         );
     }
 
+    public void requestLocationAccess() {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+    }
+
     @Override
     public void taskListener(Task task) {
         Intent goToTaskDetailsIntent = new Intent(MainActivity.this, TaskDetail.class);
@@ -281,6 +287,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         goToTaskDetailsIntent.putExtra("body", task.getBody());
         goToTaskDetailsIntent.putExtra("state", task.getState());
         goToTaskDetailsIntent.putExtra("fileKey", task.getFileKey());
+        goToTaskDetailsIntent.putExtra("address", task.getAddress());
+        goToTaskDetailsIntent.putExtra("latitude", task.getLatitude());
+        goToTaskDetailsIntent.putExtra("longitude", task.getLongitude());
         this.startActivity(goToTaskDetailsIntent);
     }
 }

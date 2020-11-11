@@ -25,12 +25,18 @@ public final class Task implements Model {
   public static final QueryField BODY = field("body");
   public static final QueryField STATE = field("state");
   public static final QueryField FILE_KEY = field("fileKey");
+  public static final QueryField ADDRESS = field("address");
+  public static final QueryField LATITUDE = field("latitude");
+  public static final QueryField LONGITUDE = field("longitude");
   public static final QueryField TEAM = field("taskTeamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="String") String state;
   private final @ModelField(targetType="String") String fileKey;
+  private final @ModelField(targetType="String") String address;
+  private final @ModelField(targetType="Float") Float latitude;
+  private final @ModelField(targetType="Float") Float longitude;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "taskTeamId", type = Team.class) Team team;
   public String getId() {
       return id;
@@ -52,16 +58,31 @@ public final class Task implements Model {
       return fileKey;
   }
   
+  public String getAddress() {
+      return address;
+  }
+  
+  public Float getLatitude() {
+      return latitude;
+  }
+  
+  public Float getLongitude() {
+      return longitude;
+  }
+  
   public Team getTeam() {
       return team;
   }
   
-  private Task(String id, String title, String body, String state, String fileKey, Team team) {
+  private Task(String id, String title, String body, String state, String fileKey, String address, Float latitude, Float longitude, Team team) {
     this.id = id;
     this.title = title;
     this.body = body;
     this.state = state;
     this.fileKey = fileKey;
+    this.address = address;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.team = team;
   }
   
@@ -78,6 +99,9 @@ public final class Task implements Model {
               ObjectsCompat.equals(getBody(), task.getBody()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
               ObjectsCompat.equals(getFileKey(), task.getFileKey()) &&
+              ObjectsCompat.equals(getAddress(), task.getAddress()) &&
+              ObjectsCompat.equals(getLatitude(), task.getLatitude()) &&
+              ObjectsCompat.equals(getLongitude(), task.getLongitude()) &&
               ObjectsCompat.equals(getTeam(), task.getTeam());
       }
   }
@@ -90,6 +114,9 @@ public final class Task implements Model {
       .append(getBody())
       .append(getState())
       .append(getFileKey())
+      .append(getAddress())
+      .append(getLatitude())
+      .append(getLongitude())
       .append(getTeam())
       .toString()
       .hashCode();
@@ -104,6 +131,9 @@ public final class Task implements Model {
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
       .append("fileKey=" + String.valueOf(getFileKey()) + ", ")
+      .append("address=" + String.valueOf(getAddress()) + ", ")
+      .append("latitude=" + String.valueOf(getLatitude()) + ", ")
+      .append("longitude=" + String.valueOf(getLongitude()) + ", ")
       .append("team=" + String.valueOf(getTeam()))
       .append("}")
       .toString();
@@ -138,6 +168,9 @@ public final class Task implements Model {
       null,
       null,
       null,
+      null,
+      null,
+      null,
       null
     );
   }
@@ -148,6 +181,9 @@ public final class Task implements Model {
       body,
       state,
       fileKey,
+      address,
+      latitude,
+      longitude,
       team);
   }
   public interface TitleStep {
@@ -161,6 +197,9 @@ public final class Task implements Model {
     BuildStep body(String body);
     BuildStep state(String state);
     BuildStep fileKey(String fileKey);
+    BuildStep address(String address);
+    BuildStep latitude(Float latitude);
+    BuildStep longitude(Float longitude);
     BuildStep team(Team team);
   }
   
@@ -171,6 +210,9 @@ public final class Task implements Model {
     private String body;
     private String state;
     private String fileKey;
+    private String address;
+    private Float latitude;
+    private Float longitude;
     private Team team;
     @Override
      public Task build() {
@@ -182,6 +224,9 @@ public final class Task implements Model {
           body,
           state,
           fileKey,
+          address,
+          latitude,
+          longitude,
           team);
     }
     
@@ -207,6 +252,24 @@ public final class Task implements Model {
     @Override
      public BuildStep fileKey(String fileKey) {
         this.fileKey = fileKey;
+        return this;
+    }
+    
+    @Override
+     public BuildStep address(String address) {
+        this.address = address;
+        return this;
+    }
+    
+    @Override
+     public BuildStep latitude(Float latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+    
+    @Override
+     public BuildStep longitude(Float longitude) {
+        this.longitude = longitude;
         return this;
     }
     
@@ -239,12 +302,15 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state, String fileKey, Team team) {
+    private CopyOfBuilder(String id, String title, String body, String state, String fileKey, String address, Float latitude, Float longitude, Team team) {
       super.id(id);
       super.title(title)
         .body(body)
         .state(state)
         .fileKey(fileKey)
+        .address(address)
+        .latitude(latitude)
+        .longitude(longitude)
         .team(team);
     }
     
@@ -266,6 +332,21 @@ public final class Task implements Model {
     @Override
      public CopyOfBuilder fileKey(String fileKey) {
       return (CopyOfBuilder) super.fileKey(fileKey);
+    }
+    
+    @Override
+     public CopyOfBuilder address(String address) {
+      return (CopyOfBuilder) super.address(address);
+    }
+    
+    @Override
+     public CopyOfBuilder latitude(Float latitude) {
+      return (CopyOfBuilder) super.latitude(latitude);
+    }
+    
+    @Override
+     public CopyOfBuilder longitude(Float longitude) {
+      return (CopyOfBuilder) super.longitude(longitude);
     }
     
     @Override

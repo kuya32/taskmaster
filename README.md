@@ -82,9 +82,17 @@
 
 ![Updated Task Master Task Detail](screenshots/taskMasterTaskDetail11.3.PNG)
 
+### Updated Task Detail 11/19
+
+![Updated Task Master Task Detail](screenshots/taskMasterTaskDetail11.9.PNG)
+
 ### Updated Task Detail 11/10
 
 ![Updated Task Master Task Detail](screenshots/taskMasterTaskDetail11.10.PNG)
+
+### Task Detail Page to Google Maps
+
+![Task Detail Page to Google Maps](screenshots/taskMasterGoogleMaps.PNG)
 
 ### User Settings
 
@@ -96,11 +104,15 @@
 
 ### Confirmation Notication from Firebase
 
-![Task Master Firebase Notification](screenshots/firebaseCloudMessaging.PNG)
+![Task Master Firebase Console Notification](screenshots/firebaseConsoleCloudMessaging.PNG)
+
+![Task Master Firebase Phone Notification](screenshots/firebaseCloudMessaging.PNG)
 
 ### Confirmation Notication from Pinpoint
 
-![Task Master Pinpoint Notification](screenshots/awsPinpointMessage.PNG)
+![Task Master Pinpoint Console Notification](screenshots/awsPinpointConsoleCampaigns.PNG)
+
+![Task Master Pinpoint Phone Notification](screenshots/awsPinpointMessage.PNG)
 
 ### AWS Analytics Events Data
 
@@ -154,7 +166,12 @@
     - trackButtonClicked()
     - eventTrackerAppStart()
   - Added methods to all necessary events within app
-- 11/10/2020
+- 11/9/2020
   - Shared images are available to Add Task page
   - Shared images are viewed in Task Detail page
+- 11/10/2020
+  - Updated schema and DynamoDB with address, latitude and longitude within task model
+  - Added permission for location access
+  - Added address text view to task detail page
+  - Task detail page has ability to check google maps with button
   
