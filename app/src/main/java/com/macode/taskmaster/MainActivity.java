@@ -33,6 +33,12 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdValue;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
     Handler handler;
     Handler handleTaskFromSubscription;
     Handler handleCheckLoggedIn;
+    AdView mAdView;
 
     public static final String TAG = "Amplify";
 
@@ -150,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
         configureAws();
         requestLocationAccess();
         getPinpointManager(getApplicationContext());
+        setupAdView();
         getTasksFromAws();
         setupRecyclerView();
         setupTaskSubscription();
@@ -221,8 +229,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
                 onCreated -> {
                     Log.i("Amplify.subscription", "Task was created: " + onCreated.getData().getTitle());
                     Task task = onCreated.getData();
-                    taskInstances.add(task);
-                    handleTaskFromSubscription.sendEmptyMessage(1);
+                    if (!taskInstances.contains(task)) {
+                        taskInstances.add(task);
+                        handleTaskFromSubscription.sendEmptyMessage(1);
+                    }
                 },
                 failure -> Log.i("Amplify", failure.toString()),
                  () -> Log.i("Amplify", "Complete")
@@ -278,6 +288,18 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.TaskL
 
     public void requestLocationAccess() {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+    }
+
+    public void setupAdView() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

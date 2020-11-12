@@ -8,29 +8,24 @@ import android.view.ViewParent;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
@@ -40,11 +35,66 @@ import static org.hamcrest.Matchers.is;
 public class AddTaskTest {
 
     @Rule
-    public ActivityTestRule<AddTask> mActivityTestRule = new ActivityTestRule<>(AddTask.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.ACCESS_FINE_LOCATION");
 
     @Test
     public void addTaskTest() {
         ViewInteraction materialButton = onView(
+                allOf(withId(R.id.loginButton), withText("Login"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.usernameLogin),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+        appCompatEditText.perform(replaceText("Kuya"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.passwordLogin),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatEditText2.perform(replaceText("kuya3232"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.passwordLogin), withText("kuya3232"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatEditText3.perform(pressImeActionButton());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.userLoginButton), withText("Login"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.addTaskMainButton), withText("ADD TASK"),
                         childAtPosition(
                                 childAtPosition(
@@ -52,59 +102,80 @@ public class AddTaskTest {
                                         0),
                                 2),
                         isDisplayed()));
-        materialButton.perform(click());
+        materialButton3.perform(click());
 
-        ViewInteraction appCompatEditText = onView(
+        ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.taskTitle), withText("My Task"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                3),
+                                4),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("Do Laundry"));
+        appCompatEditText4.perform(replaceText("Final Fight"));
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.taskTitle), withText("Do Laundry"),
+        ViewInteraction appCompatEditText5 = onView(
+                allOf(withId(R.id.taskTitle), withText("Final Fight"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                3),
+                                4),
                         isDisplayed()));
-        appCompatEditText2.perform(closeSoftKeyboard());
+        appCompatEditText5.perform(closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText3 = onView(
+        ViewInteraction appCompatEditText6 = onView(
                 allOf(withId(R.id.taskDescription), withText("Do Something"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                4),
+                                5),
                         isDisplayed()));
-        appCompatEditText3.perform(replaceText("Fold the laundry"));
+        appCompatEditText6.perform(replaceText("Defeat Sasuke"));
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.taskDescription), withText("Fold the laundry"),
+        ViewInteraction appCompatEditText7 = onView(
+                allOf(withId(R.id.taskDescription), withText("Defeat Sasuke"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                4),
+                                5),
                         isDisplayed()));
-        appCompatEditText4.perform(closeSoftKeyboard());
+        appCompatEditText7.perform(closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.taskDescription), withText("Fold the laundry"),
+        ViewInteraction materialRadioButton = onView(
+                allOf(withId(R.id.seahawksRadio), withText("Seattle Seahawks"),
+                        childAtPosition(
+                                allOf(withId(R.id.radioGroup),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                8)),
+                                3),
+                        isDisplayed()));
+        materialRadioButton.perform(click());
+
+        ViewInteraction appCompatEditText8 = onView(
+                allOf(withId(R.id.taskDescription), withText("Defeat Sasuke"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                4),
+                                5),
                         isDisplayed()));
-        appCompatEditText5.perform(pressImeActionButton());
+        appCompatEditText8.perform(pressImeActionButton());
 
-        ViewInteraction materialButton2 = onView(
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.chosenFileButton), withText("Choose File"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton4.perform(click());
+
+        ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.addTaskPageButton), withText("ADD TASK"),
                         childAtPosition(
                                 childAtPosition(
@@ -112,51 +183,7 @@ public class AddTaskTest {
                                         0),
                                 0),
                         isDisplayed()));
-        materialButton2.perform(click());
-
-        pressBack();
-
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.taskListRecyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                1)));
-        recyclerView.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription("Navigate up"),
-                        childAtPosition(
-                                allOf(withId(R.id.action_bar),
-                                        childAtPosition(
-                                                withId(R.id.action_bar_container),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.taskDetailTitle), withText("Do Laundry"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView.check(matches(withText("Do Laundry")));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.taskDetailBody), withText("Fold the laundry"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView2.check(matches(withText("Fold the laundry")));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.taskDetailState), withText("assigned"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView3.check(matches(withText("assigned")));
-
-        ViewInteraction textView4 = onView(
-                allOf(withId(R.id.taskDetailState), withText("assigned"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView4.check(matches(withText("assigned")));
+        materialButton5.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

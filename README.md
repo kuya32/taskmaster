@@ -34,6 +34,10 @@
 
 ![Updated Task Master Homepage](screenshots/taskMasterHomepage11.2.PNG)
 
+### Updated Homepage with Ad View 11/11
+
+![Updated Task Master Homepage with Ad View](screenshots/mainAdView.PNG)
+
 ### Signup Page
 
 ![Task Master Signup Page](screenshots/taskMasterSignup.PNG)
@@ -174,4 +178,6 @@
   - Added permission for location access
   - Added address text view to task detail page
   - Task detail page has ability to check google maps with button
-  
+- 11/11/2020
+  - Connected google ads services
+  - Created ad view at bottom of main activity
